@@ -56,3 +56,20 @@ class Calculator:
         self.history = self.history[:self.history_max]
 
         self.clear(self)
+
+    def precalculate(self):
+        """
+
+        :rtype: object
+        """
+        if self.action_main != '' and self.number_cache.isdigit():
+            if self.action_main == '+':
+                self.result = self.number_left + int(self.number_cache)
+            elif self.action_main == '-':
+                self.result = self.number_left - int(self.number_cache)
+            elif self.action_main == '*':
+                self.result = self.number_left * int(self.number_cache)
+            elif self.action_main == '/':
+                self.result = self.number_left / int(self.number_cache)
+            else:
+                self.result = -1
