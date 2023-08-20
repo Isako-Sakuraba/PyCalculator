@@ -1,8 +1,8 @@
-import CalculatorLogic
+import calculator_logic
 
 
 class Calculator:
-    calcLogic = CalculatorLogic.CalculatorLogic()
+    calcLogic = calculator_logic.CalculatorLogic()
     history = []  # История всех действий
     history_current = ['', '']  # История действий для текущего примера
     history_max = 6  # Максимальное число действий в истории (сколько действий калькулятор запоминает в память)
@@ -40,19 +40,9 @@ class Calculator:
         self.result = 0
 
     # Рассчитывает и возвращает результат
-    # TODO: Можно ли оптимизировать?
     def calculate(self):
-
-        if self.action_main == '+':
-            self.result = self.calcLogic.add(self.number_left, self.number_right)
-        elif self.action_main == '-':
-            self.result = self.calcLogic.sub(self.number_left, self.number_right)
-        elif self.action_main == '*':
-            self.result = self.calcLogic.mul(self.number_left, self.number_right)
-        elif self.action_main == '/':
-            self.result = self.calcLogic.div(self.number_left, self.number_right)
-        else:
-            self.result = -1
+        # Используем логику калькулятора для рассчетов
+        self.result = self.calcLogic.perform_action(self.action_main, self.number_left, self.number_right)
 
         # Обновление истории
         self.history.insert(0, [self.number_left, self.action_main, self.number_right, self.result])
@@ -60,15 +50,8 @@ class Calculator:
 
         self.clear()
 
+    # Рассчитывает результат относительно числа, которое вводят
     def precalculate(self):
         if self.action_main != '' and self.number_cache.isdigit():
-            if self.action_main == '+':
-                self.result = self.number_left + int(self.number_cache)
-            elif self.action_main == '-':
-                self.result = self.number_left - int(self.number_cache)
-            elif self.action_main == '*':
-                self.result = self.number_left * int(self.number_cache)
-            elif self.action_main == '/':
-                self.result = self.number_left / int(self.number_cache)
-            else:
-                self.result = -1
+            # Используем логику калькулятора для рассчетов
+            self.result = self.calcLogic.perform_action(self.action_main, self.number_left, int(self.number_cache))
