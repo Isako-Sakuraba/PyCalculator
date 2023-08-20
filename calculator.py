@@ -1,5 +1,8 @@
+import CalculatorLogic
+
 
 class Calculator:
+    calcLogic = CalculatorLogic.CalculatorLogic()
     history = []  # История всех действий
     history_current = ['', '']  # История действий для текущего примера
     history_max = 6  # Максимальное число действий в истории (сколько действий калькулятор запоминает в память)
@@ -41,13 +44,13 @@ class Calculator:
     def calculate(self):
 
         if self.action_main == '+':
-            self.result = self.number_left + self.number_right
+            self.result = self.calcLogic.add(self.number_left, self.number_right)
         elif self.action_main == '-':
-            self.result = self.number_left - self.number_right
+            self.result = self.calcLogic.sub(self.number_left, self.number_right)
         elif self.action_main == '*':
-            self.result = self.number_left * self.number_right
+            self.result = self.calcLogic.mul(self.number_left, self.number_right)
         elif self.action_main == '/':
-            self.result = self.number_left / self.number_right
+            self.result = self.calcLogic.div(self.number_left, self.number_right)
         else:
             self.result = -1
 
@@ -55,13 +58,9 @@ class Calculator:
         self.history.insert(0, [self.number_left, self.action_main, self.number_right, self.result])
         self.history = self.history[:self.history_max]
 
-        self.clear(self)
+        self.clear()
 
     def precalculate(self):
-        """
-
-        :rtype: object
-        """
         if self.action_main != '' and self.number_cache.isdigit():
             if self.action_main == '+':
                 self.result = self.number_left + int(self.number_cache)
